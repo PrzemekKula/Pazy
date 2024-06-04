@@ -79,7 +79,7 @@ def add_appointment():
     appointment = {
         'ID': appointment_id,
         'ID Klientki': client_id,
-        'Data (DD-MM-RRRR3)': date,
+        'Data (DD-MM-RRRR)': date,
         'Usługa': service,
         'Cena Netto': net_price,
         'Cena Brutto': gross_price,

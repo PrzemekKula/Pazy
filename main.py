@@ -8,11 +8,9 @@ CLIENTS_FILE = 'clients.csv'
 APPOINTMENTS_FILE = 'appointments.csv'
 
 def clear_terminal():
-    # Wyczyszczenie terminala w zależności od systemu operacyjnego użytkownika
     os.system('cls' if platform.system() == 'Windows' else 'clear')
 
 def initialize_files():
-    # Inicjalizacja plików, jeśli nie istnieją
     if not os.path.exists(CLIENTS_FILE):
         with open(CLIENTS_FILE, 'w', newline='') as file:
             writer = csv.writer(file)
@@ -23,8 +21,39 @@ def initialize_files():
             writer = csv.writer(file)
             writer.writerow(['ID', 'ID Klientki', 'Data', 'Usługa', 'Cena Netto', 'Cena Brutto', 'Notatka'])
 
+def load_clients():
+    clients = []
+    with open(CLIENTS_FILE, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            clients.append(row)
+    return clients
 
-# Część kodu dotycząca tworzenia wizyt klientek, do pełnego działania funckji potrzebna jest część związana z tworzeniem profilu klientek, które będziemy mergować na zajęciach stacjonarnie w środę 
+def save_client(client):
+    with open(CLIENTS_FILE, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([client['ID'], client['Imię'], client['Nazwisko'], client['Telefon']])
+
+
+def add_client():
+    clear_terminal()
+    clients = load_clients()
+    client_id = len(clients) + 1
+    first_name = input("Podaj imię klientki: ")
+    last_name = input("Podaj nazwisko klientki: ")
+    phone = input("Podaj numer telefonu: ")
+    client = {'ID': client_id, 'Imię': first_name, 'Nazwisko': last_name, 'Telefon': phone}
+    save_client(client)
+    print("Klientka dodana pomyślnie!")
+    input("\nNaciśnij Enter, aby wrócić do menu...")
+
+def view_clients():
+    clear_terminal()
+    clients = load_clients()
+    unique_clients = {client['ID']: client for client in clients}.values()
+    print("Lista klientek:")
+    for client in unique_clients:
+        print(f"{client['ID']}. {client['Imię']} {client['Nazwisko']}")
 
 def load_appointments():
     appointments = []
@@ -79,7 +108,7 @@ def add_appointment():
     appointment = {
         'ID': appointment_id,
         'ID Klientki': client_id,
-        'Data (DD-MM-RRRR)': date,
+        'Data': date,
         'Usługa': service,
         'Cena Netto': net_price,
         'Cena Brutto': gross_price,
@@ -123,4 +152,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

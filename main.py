@@ -14,12 +14,13 @@ def initialize_files():
     if not os.path.exists(CLIENTS_FILE):
         with open(CLIENTS_FILE, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['ID', 'Imię', 'Nazwisko'])
+            writer.writerow(['ID', 'Imię', 'Nazwisko', 'Telefon'])  # Added 'Telefon'
 
     if not os.path.exists(APPOINTMENTS_FILE):
         with open(APPOINTMENTS_FILE, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['ID', 'ID Klientki', 'Data', 'Usługa', 'Cena Netto', 'Cena Brutto', 'Notatka'])
+
 
 def load_clients():
     clients = []
@@ -50,10 +51,14 @@ def add_client():
 def view_clients():
     clear_terminal()
     clients = load_clients()
-    unique_clients = {client['ID']: client for client in clients}.values()
-    print("Lista klientek:")
-    for client in unique_clients:
-        print(f"{client['ID']}. {client['Imię']} {client['Nazwisko']}")
+    if not clients:
+        print("Brak klientek w systemie.")
+    else:
+        unique_clients = {client['ID']: client for client in clients}.values()
+        print("Lista klientek:")
+        for client in unique_clients:
+            print(f"{client['ID']}. {client['Imię']} {client['Nazwisko']} - Telefon: {client.get('Telefon', 'Brak')}")  # Ensure phone number is displayed
+    input("\nNaciśnij Enter, aby wrócić do menu...")
 
 def load_appointments():
     appointments = []

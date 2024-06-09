@@ -30,7 +30,7 @@ Wybierz odpowiednią opcję, wpisując jej numer i naciskając Enter.
 1. Wybierz opcję `3` z menu głównego.
 2. Zostanie wyświetlona lista wszystkich klientek.
 3. Podaj ID klientki.
-4. Podaj datę wizyty w formacie YYYY-MM-DD.
+4. Podaj datę wizyty w formacie DD-MM-RRRR.
 5. Podaj rodzaj usługi.
 6. Podaj cenę netto usługi.
 7. System automatycznie obliczy cenę brutto.
